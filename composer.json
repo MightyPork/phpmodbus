@@ -4,8 +4,13 @@
   "description": "PhpModbus with namespaces and updated to PHP 7",
   "license": "LGPL",
   "require": {
-    "php": "^5.3.2 || ^7.0",
-    "ext-sockets": "*"
+    "php": "^5.4 || ^7.0"
+  },
+  "require-dev": {
+    "react/socket": "~0.4.0",
+    "react/child-process": "^0.4.1",
+    "react/datagram": "^1.1",
+    "phpunit/phpunit": "^5.6"
   },
   "authors": [
     {
@@ -21,5 +26,15 @@
     "psr-4": {
       "PHPModbus\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-ci": "vendor/bin/phpunit --coverage-clover report/coverage.xml",
+    "test-coverage": "vendor/bin/phpunit --coverage-html report/html"
   }
 }
