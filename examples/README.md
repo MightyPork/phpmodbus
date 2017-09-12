@@ -1,3 +1,1 @@
-Those examples have not been updated to use namespaces.
-
-They may not work. Just for reference.
+Do not expose this folder publicly as you read/write modbus data with query parameters

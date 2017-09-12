@@ -2,24 +2,24 @@
 
 use PHPModbus\ModbusMaster;
 
-// Create Modbus object
-$modbus = new ModbusMaster("192.192.15.51", "UDP");
+require_once __DIR__ . '/request_input_data.php'; // 'ip', 'unitid','reference','quantity' are read from $_GET
+
+$modbus = new ModbusMaster($ip, 'UDP');
 
 try {
-	// FC 2
-	// read 2 input bits from address 0x0 (Wago input image)
-	$recData = $modbus->readInputDiscretes(0, 0, 2);
+    // FC 2
+    // read 2 input bits from address 0x0 (Wago input image)
+    $recData = $modbus->readInputDiscretes($unitId, $reference, $quantity);
 } catch (Exception $e) {
-	// Print error information if any
-	echo $modbus;
-	echo $e;
-	exit;
+    // Print error information if any
+    echo $modbus;
+    echo $e;
+    exit;
 }
 
-// Print status information
-echo "</br>Status:</br>" . $modbus;
-
-// Print read data
-echo "</br>Data:</br>";
-var_dump($recData);
-echo "</br>";
+echo '<h1>Status</h1><pre>';
+print_r($modbus);
+echo '</pre>';
+echo '<h1>Data</h1><pre>';
+print_r($recData);
+echo '</pre>';

@@ -1,23 +1,26 @@
 <?php
+require __DIR__ . '/../vendor/autoload.php';
 
 use PHPModbus\ModbusMasterUdp;
 
-// Create Modbus object
-$modbus = new ModbusMasterUdp("192.192.15.51");
+require_once __DIR__ . '/request_input_data.php'; // 'ip', 'unitid','reference','quantity' are read from $_GET
+$value = isset($_GET['value']) ? ((bool)$_GET['value']) : false;
 
-// Data to be writen - TRUE, FALSE
-$data_true = array(true);
-$data_false = array(false);
+$modbus = new ModbusMasterUdp($ip);
 
 try {
-	// Write single coil - FC5
-	$modbus->writeSingleCoil(0, 12288, $data_true);
-	$modbus->writeSingleCoil(0, 12289, $data_false);
-	$modbus->writeSingleCoil(0, 12290, $data_true);
-	$modbus->writeSingleCoil(0, 12291, $data_false);
+    // Write single coil - FC5
+    $recData = $modbus->writeSingleCoil($unitId, $reference, [$value]);
 } catch (Exception $e) {
-	// Print error information if any
-	echo $modbus;
-	echo $e;
-	exit;
+    // Print error information if any
+    echo $modbus;
+    echo $e;
+    exit;
 }
+
+echo '<h1>Status</h1><pre>';
+print_r($modbus);
+echo '</pre>';
+echo '<h1>Data</h1><pre>';
+print_r($recData);
+echo '</pre>';

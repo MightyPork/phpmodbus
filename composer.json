@@ -7,6 +7,12 @@
     "php": "^5.3.2 || ^7.0",
     "ext-sockets": "*"
   },
+  "require-dev": {
+    "react/socket": "~0.4.0",
+    "react/child-process": "^0.4.1",
+    "react/datagram": "^1.1",
+    "phpunit/phpunit": "^5.6"
+  },
   "authors": [
     {
       "name": "Honza Krakora",
@@ -21,5 +27,15 @@
     "psr-4": {
       "PHPModbus\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-ci": "vendor/bin/phpunit --coverage-clover report/coverage.xml",
+    "test-coverage": "vendor/bin/phpunit --coverage-html report/html"
   }
 }

@@ -1,9 +1,11 @@
 <?php
+require __DIR__ . '/../vendor/autoload.php';
 
-use PHPModbus\ModbusMaster;
+use PHPModbus\ModbusMasterUdp;
 
-// Create Modbus object
-$modbus = new ModbusMaster("192.192.15.51", "UDP");
+require_once __DIR__ . '/request_input_data.php'; // 'ip', 'unitid','reference','quantity' are read from $_GET
+
+$modbus = new ModbusMasterUdp($ip);
 
 // Data to be writen
 $bitValue = true;
@@ -13,7 +15,7 @@ $orMask = 0x0000 ^ (pow(2, $bitNumber) * $bitValue);
 
 try {
 	// FC22
-	$modbus->maskWriteRegister(0, 12288, $andMask, $orMask);
+    $recData = $modbus->maskWriteRegister($unitId, $reference, $andMask, $orMask);
 } catch (Exception $e) {
 	// Print error information if any
 	echo $modbus;
@@ -21,5 +23,9 @@ try {
 	exit;
 }
 
-// Print status information
-echo $modbus;
+echo '<h1>Status</h1><pre>';
+print_r($modbus);
+echo '</pre>';
+echo '<h1>Data</h1><pre>';
+print_r($recData);
+echo '</pre>';
